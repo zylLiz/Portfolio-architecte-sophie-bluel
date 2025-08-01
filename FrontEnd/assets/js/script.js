@@ -39,7 +39,7 @@ async function loadWorks() {
       figure.appendChild(caption);
       gallery.appendChild(figure);
 
-       console.log("✅ Projet ajouté à la galerie :", work.title);
+       console.log("Projet ajouté à la galerie :", work.title);
     });
 
     console.log("Tous les projets ont été chargés !");
