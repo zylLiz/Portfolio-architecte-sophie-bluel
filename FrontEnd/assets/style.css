@@ -186,3 +186,36 @@ footer nav ul {
 	margin: 2em
 }
 
+/*Ajout d'un menu de filtres avec des boutons cliquables*/ 
+.filters {
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+	margin-bottom: 30px;
+	flex-wrap: wrap;
+}
+
+.filter-btn {
+	padding: 8px 20px;
+	border: 1px solid #1D6154;
+	border-radius: 60px;
+	background-color: white;
+	color:#1D6154;
+	font-family: 'Syne';
+	font-weight: 700;
+	font-size: 16px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+	background-color: #1D6154;
+	color: white;
+}
+
+.filter-btn.active {
+	background-color: #1D6154;
+	color: white;
+}
+
+
