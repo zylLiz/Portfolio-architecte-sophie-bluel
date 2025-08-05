@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Connexion - Sophie Bluel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--Lien vers la feuille de style CSS globale du projet-->
+    <link rel="stylesheet" href="./assets/style.css">
+
+    <!--Polices personnalisées depuis Google fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">    
+</head>
+
+<body>
+ 
+    <!--En-tête avec logo et menu de navigation-->
+    <header>
+        <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">projets</a></li>
+                <li>contact</li>
+                <li><strong>login</strong></li>
+                <li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!--Section principale avec formulaire de connexion-->
+    <main id="login">
+        <h2>Log In</h2>
+
+        <!--Formulaire non fonctionnel pour l'insatnt (pas encore de js)-->
+        <form>
+            <!--Champ email-->
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" required>
+
+            <!--Champ mot de passe-->
+            <label for="password">Mot de passe</label>
+            <input type="password" id="password" name="password" required>
+
+            <!--Bouton de connexion-->
+            <button type="submit">Se connecter</button>
+
+            <!--Lien de récupération de mot de passe-->
+            <a href="#">Mot de passe oublié</a>
+        </form>
+    </main>
+
+    <!--Pied de page-->
+    <footer>
+        <nav>
+            <ul>
+                <li>Mention Légales</li>
+            </ul>
+        </nav>
+    </footer>
+
+   <script src="./assets/js/login.js"></script>
+</body>
+</html>
