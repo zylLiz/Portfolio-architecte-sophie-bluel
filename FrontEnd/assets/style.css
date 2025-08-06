@@ -259,6 +259,90 @@ footer nav ul {
 	color: inherit;
 }
 
+/*3.1 Masquer la modale tant qu'elle n'est pas activée*/
+.hidden {
+	display: none;
+}
+
+/*Fond semi-transparent noir qui couvre tt l'écran*/
+.modal {
+	position: fixed; /*fixe la modale par rapport à la fenêtre*/
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.6); /*noir semi-transaprent*/
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000; /*pour qu'elle passe au-dessus du contenu*/
+}
+
+/*Bloc blanc centré, contenant la modale*/
+.modal-content {
+	background-color: #fff;
+	padding: 30px 60px;
+	border-radius: 10px;
+	width: 630px;
+	height: 688px;
+	font-family: 'Work Sans' , sans-serif;
+	font-size: 14px;
+	position: relative;
+	text-align: center;
+	/*mettre le bouton en bas*/
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start; /*contenu en bas*/
+	align-items: center;
+}	
+
+/*Titre de la modale (galerie photo)*/
+.modal-content h3 {
+	font-family: 'Work Sans';
+	font-size: 26px;
+	font-weight: 400;
+	color:black;
+	margin-bottom: 30px;
+}
+
+/*Bouton de fermeture (croix) dans le coin supérieur droit*/
+.modal-close {
+	position:absolute;
+	top: 20px;
+	right: 20px;
+	font-size: 24px;
+	color: #000;
+	cursor: pointer;
+}
+
+/*Bouton vert "Ajouter une photo"*/
+.btn-primary {
+	background-color: #1D6154;
+	color: white;
+	border: none;
+	padding: 10px 30px;
+	font-size: 14px;
+	border-radius: 60px;
+	cursor: pointer;
+	margin-top: auto; /*pousse le bouton vers le bas*/
+	width: 237px;
+	height: 36px;
+}
+
+/*Hover sur bouton*/
+.btn-primary:hover {
+	background-color: #144e44; /*un peu plus foncé*/
+}
+
+/*Ligne de séparation dans la modale*/
+.modal-separator {
+	width: 420px;
+	height: 1px;
+	background-color: #b3b3b3; /*gris clair*/
+	margin: 40px 0 30px; /*espace au-dessus et en -dessous*/
+	border: none; /*supprime le style par défaut du <hr>*/
+}
+
 
 
 

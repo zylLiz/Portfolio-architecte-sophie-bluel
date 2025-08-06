@@ -54,6 +54,23 @@
 	</section>
 </main>
 
+<!--3.1 Ajout de la fenêtre modale-->
+<aside class="modal hidden" id="modal">
+	<div class="modal-content">
+		<span class="modal-close" id="modal-close">&times;</span>
+		<h3 class="modal-title">Galerie photo</h3>
+
+		<div id="modal-gallery" class="modal-gallery"></div>
+			<!--Affichera dynamiquement les photos ici-->
+
+		<!--Ligne grise comme dans figma qui séparent les séctions de contenu-->
+		<hr class="modal-separator">	
+
+		<!--Bouton vers vue "Ajout photo"-->
+		<button id="btn-primary" class="btn-primary">Ajouter une photo</button>
+	</div>
+</aside>
+
 <footer>
 	<nav>
 		<ul>
@@ -62,6 +79,8 @@
 	</nav>
 </footer>
 
+<!--3.1 Lien vers le script JS de la modale (tjrs a la fin!)-->
+<script src="./assets/js/modal.js"></script>
 <script src="./assets/js/script.js"></script>
 </body>
 </html>
