@@ -343,6 +343,43 @@ footer nav ul {
 	border: none; /*supprime le style par défaut du <hr>*/
 }
 
+/* ============================= */
+/*       3 - MODE ÉDITION         */
+/* ============================= */
+
+/*Bandeau noir en haut */
+#black-header {
+	background-color: black;
+	color: white;
+	padding: 8px 0;
+	text-align: center;
+	font-weight: 500;
+	font-family: 'Work Sans', sans-serif;
+	font-size: 16px;
+}
+
+/*Contenu du bandeau : icone + texte */
+.black-header-content {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	color: white;
+}
+
+/*Icone crayon*/
+.black-header-content i {
+	font-size: 16px;
+}
+
+/*Cacher le bandeau par défaut*/
+.hidden {
+	display: none;
+}
+
+
+
+
 
 
 

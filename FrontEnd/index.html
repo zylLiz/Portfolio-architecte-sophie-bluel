@@ -11,13 +11,21 @@
 	<link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
+
+<!--3-Bandeau noir mode édition + icone crayon (invisible par défaut)-->
+<div id="black-header" class="hidden">
+	<div class="black-header-content">
+		<img src="./assets/icons/edit-icon.svg" alt="Icône crayon" class="edit-icon" />
+		<span>Mode édition</span>
+	</div>
+</div>
 <header>
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
 			<li>projets</li>
 			<li>contact</li>
-			<li>login</li>
+			<li><a href=# id="login-link"></a>login</li> <!--3-Login modifiable en JS-->
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -55,21 +63,17 @@
 </main>
 
 <!--3.1 Ajout de la fenêtre modale-->
-<aside class="modal hidden" id="modal">
+<!-- <aside class="modal hidden" id="modal">
 	<div class="modal-content">
 		<span class="modal-close" id="modal-close">&times;</span>
 		<h3 class="modal-title">Galerie photo</h3>
 
 		<div id="modal-gallery" class="modal-gallery"></div>
-			<!--Affichera dynamiquement les photos ici-->
-
-		<!--Ligne grise comme dans figma qui séparent les séctions de contenu-->
 		<hr class="modal-separator">	
 
-		<!--Bouton vers vue "Ajout photo"-->
 		<button id="btn-primary" class="btn-primary">Ajouter une photo</button>
 	</div>
-</aside>
+</aside> -->
 
 <footer>
 	<nav>
@@ -80,6 +84,7 @@
 </footer>
 
 <!--3.1 Lien vers le script JS de la modale (tjrs a la fin!)-->
+<script src="./assets/js/auth.js"></script>
 <script src="./assets/js/modal.js"></script>
 <script src="./assets/js/script.js"></script>
 </body>
