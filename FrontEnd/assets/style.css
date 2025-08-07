@@ -356,9 +356,11 @@ footer nav ul {
 	font-weight: 500;
 	font-family: 'Work Sans', sans-serif;
 	font-size: 16px;
+	width: 1440px;
+	max-width: 100%;
 }
 
-/*Contenu du bandeau : icone + texte */
+/*Contenu du bandeau : icone crayon + texte */
 .black-header-content {
 	display: flex;
 	justify-content: center;
