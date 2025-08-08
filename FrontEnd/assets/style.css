@@ -185,8 +185,8 @@ footer nav ul {
 	justify-content: flex-end;
 	margin: 2em
 }
-
-/***=== Ajout d'un menu de filtres avec des boutons cliquables ===***/ 
+/***================================================================
+=== Ajout d'un menu de filtres avec des boutons cliquables ===***/ 
 .filters {
 	display: flex;
 	justify-content: center;
@@ -217,8 +217,8 @@ footer nav ul {
 	background-color: #1D6154;
 	color: white;
 }
-
-/***=== Page de connexion ===***/
+/***=============================
+=== Page de connexion ===***/
 #login {
 	width: 50%;
 	margin: auto;
@@ -259,7 +259,90 @@ footer nav ul {
 	color: inherit;
 }
 
-/*3.1 Masquer la modale tant qu'elle n'est pas activée*/
+/*** ===============================
+====== Section INTRO ============== */
+
+
+
+/* ============================= 
+======= 3 - MODE ÉDITION ======= */         
+
+/*Bandeau noir en haut */
+#black-header {
+	background-color: black;
+	color: white;
+	padding: 8px 0;
+	text-align: center;
+	font-family: 'Work Sans', sans-serif;
+	font-size: 16px;
+	width: 100vw;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+}
+
+/*Contenu du bandeau : icone crayon + texte */
+.black-header-content {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	max-width: 1140px;
+	margin: 0 auto;
+}
+
+/*Icone crayon*/
+.black-header-content i {
+	font-size: 16px;
+}
+
+/*Cacher le bandeau par défaut*/
+.hidden {
+	display: none;
+}
+
+/*Mes projets + icone crayon noir et texte "modifier" sur m^me ligne centré*/
+.portfolio-header {
+    display: flex;
+    justify-content: center; /* Mes projets à gauche, modifier à droite */
+    align-items: baseline; /* Alignement vertical */
+	max-width: 1140px;
+    margin: 40px auto 40px 0; /* Espace avec les éléments en dessous */
+	padding: 0;
+	gap: 50px;
+}
+
+.portfolio-header h2{
+  margin: 0;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 36px;
+  color: #1D6154;
+}
+
+#edit-button{
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 14px;
+  line-height: 18px;
+  color: #000;
+  cursor: pointer;
+}
+
+.edit-icon{
+  width: 17px;
+  height: 17px;
+  position: relative;
+  top: -1px; /* petit tweak si besoin */
+}
+
+/*** ================================================
+====== 3.1 Masquer la MODALE tant qu'elle n'est pas activée ==========*/
 .hidden {
 	display: none;
 }
@@ -341,45 +424,6 @@ footer nav ul {
 	background-color: #b3b3b3; /*gris clair*/
 	margin: 40px 0 30px; /*espace au-dessus et en -dessous*/
 	border: none; /*supprime le style par défaut du <hr>*/
-}
-
-/* ============================= */
-/*       3 - MODE ÉDITION         */
-/* ============================= */
-
-/*Bandeau noir en haut */
-#black-header {
-	background-color: black;
-	color: white;
-	padding: 8px 0;
-	text-align: center;
-	font-family: 'Work Sans', sans-serif;
-	font-size: 16px;
-	width: 100vw;
-	position: fixed;
-	top: 0;
-	left: 0;
-	z-index: 1000;
-}
-
-/*Contenu du bandeau : icone crayon + texte */
-.black-header-content {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	gap: 10px;
-	max-width: 1140px;
-	margin: 0 auto;
-}
-
-/*Icone crayon*/
-.black-header-content i {
-	font-size: 16px;
-}
-
-/*Cacher le bandeau par défaut*/
-.hidden {
-	display: none;
 }
 
 
