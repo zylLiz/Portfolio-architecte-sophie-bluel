@@ -324,7 +324,7 @@ footer nav ul {
 
 #edit-button{
   all: unset;
-  display: inline-flex;
+  display: none;
   align-items: center;
   gap: 8px;
   font-family: 'Work Sans', sans-serif;
@@ -460,13 +460,8 @@ header nav li:last-child {
 /***======= UNE SEULE FOIS & TJRS EN BAS DE PAGE CSS =====***/
 
 /* Utilitaire unique */
-.hidden { display: none !important; }
+.hidden { display: none; }
 
-/* Bouton modifier : caché par défaut */
-#edit-button { display: none; }
-
-/* Visible UNIQUEMENT en mode édition */
-body[data-edit="on"] #edit-button { display: inline-flex; }
 
 
 

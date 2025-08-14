@@ -12,7 +12,10 @@ function handleLoginSuccess() {
     }
 
     //Affiche aussi le "bouton modifier" (si présent)
-    document.getElementById('edit-button')?.classList.remove('hidden');
+    const editBtn = document.getElementById('edit-button');
+    if (editBtn) {
+        editBtn.style.display = 'inline-flex';
+    }
 
     //Masque les filtres (si présents)
     document.getElementById('filters-section')?.classList.add('hidden');
