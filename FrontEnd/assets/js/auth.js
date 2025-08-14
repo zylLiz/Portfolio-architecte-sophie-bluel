@@ -2,25 +2,25 @@
 
 //3-Fonction appelé après une connexion réussie
 function handleLoginSuccess() {
-//Affiche le bandeau noir
-document.getElementById('black-header')?.classList.remove('hidden');
+    //Affiche le bandeau noir
+    document.getElementById('black-header')?.classList.remove('hidden');
 
-//Change "login" en "logout"
-const loginLink = document.getElementById('login-link');
-if (loginLink) {
-    loginLink.textContent = 'logout';
-}
+    //Change "login" en "logout"
+    const loginLink = document.getElementById('login-link');
+    if (loginLink) {
+        loginLink.textContent = 'logout';
+    }
 
-//Affiche aussi le "bouton modifier" (si présent)
-document.getElementById('edit-button')?.classList.remove('hidden');
+    //Affiche aussi le "bouton modifier" (si présent)
+    document.getElementById('edit-button')?.classList.remove('hidden');
 
-//Masque les filtres (si présents)
-document.getElementById('filters-section')?.classList.add('hidden');
+    //Masque les filtres (si présents)
+    document.getElementById('filters-section')?.classList.add('hidden');
 }
 
 //Vérifie à chaque chargement si l'utilisateur est connecté
 document.addEventListener('DOMContentLoaded', () => {
-    const token = sessionStorage.getItem('token'); // ou localStorage
+    const token = localStorage.getItem('token'); 
 
     if (token) {
         handleLoginSuccess();
@@ -29,8 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const loginLink = document.getElementById('login-link');
         loginLink?.addEventListener('click', (e) => {
             e.preventDefault();
-            sessionStorage.removeItem('token');
+            localStorage.removeItem('token');
             location.reload();
         });
     }
 });
+
+//rajouter un traitement faire afficher le "boutton modifier" (creer class avec propiete display block ou flex)

@@ -298,9 +298,9 @@ footer nav ul {
 }
 
 /*Cacher le bandeau par défaut*/
-.hidden {
+/*.hidden {
 	display: none;
-}
+}*/
 
 /*Mes projets + icone crayon noir et texte "modifier" sur m^me ligne centré*/
 .portfolio-header {
@@ -343,9 +343,9 @@ footer nav ul {
 
 /*** ================================================
 ====== 3.1 Masquer la MODALE tant qu'elle n'est pas activée ==========*/
-.hidden {
+/*.hidden {
 	display: none;
-}
+}*/
 
 /*Fond semi-transparent noir qui couvre tt l'écran*/
 .modal {
@@ -425,6 +425,50 @@ footer nav ul {
 	margin: 40px 0 30px; /*espace au-dessus et en -dessous*/
 	border: none; /*supprime le style par défaut du <hr>*/
 }
+
+/***=========== NAV HEADER ===========***/
+/* Nav header */
+header nav ul { gap: 20px; }
+header nav li, header nav a {
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1;            /* 100% */
+  color: #3D3D3D;
+}
+header nav a { text-decoration: none; color: inherit; }
+header nav li:hover, header nav a:hover { color: #B1663C; }
+
+header nav li img {
+  width: 22px;
+  height: 22px;
+  display: inline-block;
+  object-fit: contain;
+  vertical-align: middle;
+}
+
+header nav ul {
+  gap: 20px; /* espace horizontal entre chaque élément du menu */
+}
+
+header nav li:last-child {
+  padding-left: 4px; /* petit ajustement si besoin */
+}
+
+
+
+/***======= UNE SEULE FOIS & TJRS EN BAS DE PAGE CSS =====***/
+
+/* Utilitaire unique */
+.hidden { display: none !important; }
+
+/* Bouton modifier : caché par défaut */
+#edit-button { display: none; }
+
+/* Visible UNIQUEMENT en mode édition */
+body[data-edit="on"] #edit-button { display: inline-flex; }
+
+
 
 
 
