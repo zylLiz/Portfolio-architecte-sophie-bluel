@@ -1,23 +1,48 @@
 //3.1_Sélectionne les éléments DOM nécessaires
 const modal = document.getElementById("modal");
-const openModalBtn = document.querySelector(".modifier-btn"); //Adaptable si besoin
 const closeModalBtn = document.getElementById("modal-close");
+const openModalBtn = document.getElementById("edit-button"); // <-- bouton "modifier"
 
-//Vérifie si le bouton d'ouverture est présent avant d'attacher l'évènement
-if (openModalBtn) {
-    openModalBtn.addEventListener("click", () => {
-        modal.classList.remove("hidden"); //Affiche la modale
-    });
+// Garde-fous
+if (!modal) console.warn("[modal] #modal introuvable");
+if (!closeModalBtn) console.warn("[modal] #modal-close introuvable");
+if (!openModalBtn) console.warn("[modal] #edit-button introuvable (bouton d'ouverture)");
+
+// Helpers d’ouverture/fermeture
+function openModal() {
+  if (!modal) return;
+  modal.classList.remove("hidden");
+  document.body.classList.add("modal-open");
+  document.addEventListener("keydown", onKeyDown);
 }
 
-//Fermeture de la modale quand on clique sur la croix
-closeModalBtn.addEventListener("click", () => {
-    modal.classList.add("hidden"); //cache la modale
+function closeModal() {
+  if (!modal) return;
+  modal.classList.add("hidden");
+  document.body.classList.remove("modal-open");
+  document.removeEventListener("keydown", onKeyDown);
+}
+
+function onKeyDown(e) {
+  if (e.key === "Escape") {
+    e.preventDefault();
+    closeModal();
+  }
+}
+
+// Événements
+openModalBtn?.addEventListener("click", (e) => {
+  e.preventDefault();
+  openModal();
 });
 
-//Fermer la modale en cliquant en dehors du contenu
-modal.addEventListener("click", (event) => {
-    if (event.target === modal) {
-        modal.classList.add("hidden");
-    }
+closeModalBtn?.addEventListener("click", (e) => {
+  e.preventDefault();
+  closeModal();
 });
+
+// Ferme si clic sur le fond assombri (en-dehors du panneau)
+modal?.addEventListener("click", (e) => {
+  if (e.target === modal) closeModal();
+});
+

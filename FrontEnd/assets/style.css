@@ -462,6 +462,12 @@ header nav li:last-child {
 /* Utilitaire unique */
 .hidden { display: none; }
 
+/* Bloque le scroll quand la modale est ouverte */
+body.modal-open { overflow: hidden; }
+
+/* Place la modale au-dessus du bandeau noir */
+.modal { z-index: 1100; } /* > 1000 du black-header */
+
 
 
 
