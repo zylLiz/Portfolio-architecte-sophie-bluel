@@ -46,7 +46,8 @@
 	<section id="portfolio">
 		<div class="portfolio-header">
 		<h2>Mes Projets</h2>
-		<button id="edit-button" class="hidden">
+		<!--3.1 Modale: ajout de aria-label et rôle bouton-->
+		<button id="edit-button" class="hidden" aria-label="Modifier la galerie">
 			<img src="./assets/icons/edit-icon-noir.png" alt="Icône crayon" class="edit-icon">
 			modifier <!--icône crayon+ text "modifier"-->
 		</button>
@@ -55,6 +56,7 @@
 		<div class="filters" id="filters-section"></div> <!-- Filtres dynamiques via JS -->
 		<div class="gallery"></div>
 	</section>
+
 	<section id="contact">
 		<h2>Contact</h2>
 		<p>Vous avez un projet ? Discutons-en !</p>
@@ -70,16 +72,24 @@
 	</section>
 </main>
 
-<!--3.1 Ajout de la fenêtre modale-->
+<!--3.1 Ajout de la fenêtre modale & ajout aria-label + structure prête pour 2 vues-->
 <aside class="modal hidden" id="modal">
 	<div class="modal-content">
-		<span class="modal-close" id="modal-close">&times;</span>
-		<h3 class="modal-title">Galerie photo</h3>
+		<span class="modal-close" id="modal-close" aria-label="Fermer la modale">&times;</span>
 
-		<div id="modal-gallery" class="modal-gallery"></div>
+		<!-- Vue 1 : Galerie -->
+		<div class="modal-view" id="modal-view-gallery">
+			<h3 class="modal-title">Galerie photo</h3>
+			<div id="modal-gallery" class="modal-gallery"></div>
 			<hr class="modal-separator">	
-
 			<button id="btn-primary" class="btn-primary">Ajouter une photo</button>
+		</div>
+		
+		<!-- Vue 2 : Ajout photo (cachée par défaut)-->
+		 <div class="modal-view hidden" id="modal-view-add">
+			<h3 class="modal-title">Ajout photo</h3>
+			<!-- Formulaire d'ajout ici -->
+		 </div>
 	</div>
 </aside>
 
