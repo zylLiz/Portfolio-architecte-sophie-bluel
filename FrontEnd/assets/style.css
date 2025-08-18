@@ -259,11 +259,6 @@ footer nav ul {
 	color: inherit;
 }
 
-/*** ===============================
-====== Section INTRO ============== */
-
-
-
 /* ============================= 
 ======= 3 - MODE ÉDITION ======= */         
 
@@ -297,10 +292,6 @@ footer nav ul {
 	font-size: 16px;
 }
 
-/*Cacher le bandeau par défaut*/
-/*.hidden {
-	display: none;
-}*/
 
 /*Mes projets + icone crayon noir et texte "modifier" sur m^me ligne centré*/
 .portfolio-header {
@@ -341,90 +332,6 @@ footer nav ul {
   top: -1px; /* petit tweak si besoin */
 }
 
-/*** ================================================
-====== 3.1 Masquer la MODALE tant qu'elle n'est pas activée ==========*/
-/*.hidden {
-	display: none;
-}*/
-
-/*Fond semi-transparent noir qui couvre tt l'écran*/
-.modal {
-	position: fixed; /*fixe la modale par rapport à la fenêtre*/
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0,0,0,0.6); /*noir semi-transaprent*/
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	z-index: 1000; /*pour qu'elle passe au-dessus du contenu*/
-}
-
-/*Bloc blanc centré, contenant la modale*/
-.modal-content {
-	background-color: #fff;
-	padding: 30px 60px;
-	border-radius: 10px;
-	width: 630px;
-	height: 688px;
-	font-family: 'Work Sans' , sans-serif;
-	font-size: 14px;
-	position: relative;
-	text-align: center;
-	/*mettre le bouton en bas*/
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start; /*contenu en bas*/
-	align-items: center;
-}	
-
-/*Titre de la modale (galerie photo)*/
-.modal-content h3 {
-	font-family: 'Work Sans';
-	font-size: 26px;
-	font-weight: 400;
-	color:black;
-	margin-bottom: 30px;
-}
-
-/*Bouton de fermeture (croix) dans le coin supérieur droit*/
-.modal-close {
-	position:absolute;
-	top: 20px;
-	right: 20px;
-	font-size: 24px;
-	color: #000;
-	cursor: pointer;
-}
-
-/*Bouton vert "Ajouter une photo"*/
-.btn-primary {
-	background-color: #1D6154;
-	color: white;
-	border: none;
-	padding: 10px 30px;
-	font-size: 14px;
-	border-radius: 60px;
-	cursor: pointer;
-	margin-top: auto; /*pousse le bouton vers le bas*/
-	width: 237px;
-	height: 36px;
-}
-
-/*Hover sur bouton*/
-.btn-primary:hover {
-	background-color: #144e44; /*un peu plus foncé*/
-}
-
-/*Ligne de séparation dans la modale*/
-.modal-separator {
-	width: 420px;
-	height: 1px;
-	background-color: #b3b3b3; /*gris clair*/
-	margin: 40px 0 30px; /*espace au-dessus et en -dessous*/
-	border: none; /*supprime le style par défaut du <hr>*/
-}
 
 /***=========== NAV HEADER ===========***/
 /* Nav header */
@@ -456,8 +363,159 @@ header nav li:last-child {
 }
 
 
+/*** ================================================
+====== 3.1 Masquer la MODALE tant qu'elle n'est pas activée ==========*/
 
-/***======= UNE SEULE FOIS & TJRS EN BAS DE PAGE CSS =====***/
+/*Fond semi-transparent noir qui couvre tt l'écran*/
+.modal {
+	position: fixed; /*fixe la modale par rapport à la fenêtre*/
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.6); /*noir semi-transaprent*/
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1100; /*Ajout: 1100 au dessus du header noir */
+}
+
+/*Bloc blanc centré, contenant la modale*/
+.modal-content {
+	background-color: #fff;
+	padding: 30px 60px;
+	border-radius: 10px;
+	width: 630px;
+	height: 688px;
+	font-family: 'Work Sans' , sans-serif;
+	font-size: 14px;
+	position: relative;
+	text-align: center;
+	/*mettre le bouton en bas*/
+	display: flex;
+	/*flex-direction: column;*/
+	/*justify-content: flex-start; /*contenu en bas*/
+	align-items: center;
+}	
+
+/*Titre de la modale (galerie photo)*/
+.modal-title {
+	font-family: 'Work Sans';
+	font-size: 26px;
+	font-weight: 400;
+	color:black;
+	margin-bottom: 30px;
+}
+
+/*Bouton de fermeture (croix) dans le coin supérieur droit*/
+.modal-close {
+	position:absolute;
+	top: 20px;
+	right: 20px;
+	font-size: 24px;
+	color: #000;
+	cursor: pointer;
+}
+
+
+
+
+/* ============================
+   Mise en page de la galerie interne à la modale
+   ============================ */
+
+/*Chaque vue occupe toute la hauteur dispo et empile son contenu */
+.modal-view {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	flex: 1; /*prend la hauteur dispo dns .modal-content*/
+	width: 100%;
+	justify-content: space-between; /*titre en haut, galerie au centre, bas en bas */
+}   
+
+/* Conteneur des vignettes → grille de 5 colonnes */
+.modal .modal-gallery {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr); /*5 colonnes égales*/
+	gap: 10px; /*espace netre les items*/
+	width: 100%;
+	max-width: 420px;
+	margin: 0 auto; 
+	margin-top: 30px;
+	margin-bottom: 30px;
+}   
+
+/* Chaque case (figure) → reset des marges, position relative pour placer le bouton */
+.modal .modal-gallery figure { 
+  position: relative; 
+  margin: 0; 
+}
+
+.modal .modal-gallery img {
+	display: block;
+	width: 100%;
+	height: 100px;
+	object-fit: cover; /*recadrage propre*/
+}
+
+/* Images des vignettes → taille fixe en hauteur, recadrées */
+.modal .modal-gallery .delete-icon{
+	position: absolute;
+	top: 6px;
+	right: 6px;
+	width: 17px;
+	height: 17px;
+	background: #000;
+	color: #fff;
+	border: 0;
+	border-radius: 2px;
+	display: flex; /*centre l'icône*/
+	align-items: center; /*centre vertical*/
+	cursor: pointer;
+	justify-content: center; /*centre horizontal*/
+}
+
+/* Icône poubelle (l’image blanche à l’intérieur du bouton) */
+.modal .modal-gallery .delete-icon img{
+	width: 17px;
+	height: 17px;
+	display: block;  /*supprime l'espace inline fantôme)*/
+}
+
+
+/* ===== Bas de vue : ligne + bouton ===== */
+/*Ligne de séparation dans la modale*/
+.modal-separator {
+	width: 420px;
+	height: 1px;
+	background-color: #b3b3b3; /*gris clair*/
+	margin: 40px 0 30px; /*espace au-dessus et en -dessous*/
+	border: none; /*supprime le style par défaut du <hr>*/
+	margin-top: auto; /* ajout : pousse le séparateur (et donc le bouton) vers le bas */
+}
+
+/*Bouton vert "Ajouter une photo"*/
+.btn-primary {
+	background-color: #1D6154;
+	color: white;
+	border: none;
+	padding: 10px 30px;
+	font-size: 14px;
+	border-radius: 60px;
+	cursor: pointer;
+	width: 237px;
+	height: 36px;
+	margin-top: 24px; /*petit espace sous la ligne*/
+}
+
+/*Hover sur bouton*/
+.btn-primary:hover {
+	background-color: #144e44; /*un peu plus foncé*/
+}
+
+
+/***======= Utilitaires globaux_UNE SEULE FOIS & TJRS EN BAS DE PAGE CSS =====***/
 
 /* Utilitaire unique pour cacher */
 .hidden { display: none; }
@@ -465,11 +523,11 @@ header nav li:last-child {
 /* Bloque le scroll quand la modale est ouverte */
 body.modal-open { overflow: hidden; }
 
-/* Place la modale au-dessus du bandeau noir */
-.modal { z-index: 1100; } /* > 1000 du black-header */
-
-/* cache une vue de la modale */
+/* cache une vue de la modale (Gallerie ou Ajout) */
 .modal-view.hidden { display: none; }  
+
+
+
 
 
 
