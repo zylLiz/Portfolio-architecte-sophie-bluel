@@ -61,7 +61,7 @@ function onKeyDown(e) {
 
 /* AJOUT : utilitaire pour obtenir la source des works
    - priorité à window.allWorks (déjà rempli par script.js)
-   - sinon fallback: requête API
+   - BONUS : sinon on fait un GET API en fallback
 */
 async function getWorksSource() {
   // cas normal : script.js a déjà rempli allWorks
@@ -80,12 +80,12 @@ async function getWorksSource() {
   }
 }
 
-/* AJOUT : rend la galerie dans la modale à partir des works */
+/* AJOUT : rend la galerie dans la modale à partir des works + icone poubelle */
 async function renderModalGallery() {
   if (!modalGallery) return;
 
   // reset du conteneur
-  modalGallery.innerHTML = "";
+  modalGallery.innerHTML = ""; //reset
 
   const works = await getWorksSource();
 
@@ -109,10 +109,32 @@ async function renderModalGallery() {
     delBtn.setAttribute("aria-label", "Supprimer");
 
     const icon = document.createElement("img");
-    icon.src = "./assets/icons/Icon-poubelle.svg";             /* AJOUT : vérifie le chemin */
+    icon.src = "./assets/icons/Icon-poubelle.svg";             /* AJOUT : vérifie le chemin exact */
     icon.alt = "";
     icon.setAttribute("aria-hidden", "true");
     delBtn.appendChild(icon);
+
+    //Clic poubelle → suppression
+    delBtn.addEventListener("click", async (e) => {
+        e.preventDefault();
+        e.stopPropagation(); // évite tt clic "derrière"
+
+        const ok = await deleteWork(work.id);
+        if (!ok) return; 
+
+        //Retire la vignette tout de suite (UX fluide)
+        figure.remove();
+
+        // AJOUT: sécurise la remise en état de la grille modale
+        await renderModalGallery();
+
+        //Rafraichit la galerie principale
+        if (typeof displayWorks === "function") {
+            displayWorks(window.allWorks);
+        } else if (typeof renderWorks === "function") {
+            renderWorks(window.allWorks);
+        }
+    });
 
     // TODO (prochaine étape) : suppression API + refresh UI
     // delBtn.addEventListener("click", async () => { await deleteWork(work.id); });
@@ -122,6 +144,65 @@ async function renderModalGallery() {
     modalGallery.appendChild(figure);
 
     });
+}
+
+/* ===================================================
+   4.1 Suppression d’un work via la poubelle
+   =================================================== */
+/**
+ * ATTENTION :
+ *   - La suppression est DÉFINITIVE côté API (backend).
+ *   - Une fois supprimé, le work (image + infos) disparaît
+ *     de la base de données et n’est pas récupérable.
+ *   - Si on veut revoir l’image, il faudra la réuploader 
+ *     via la vue "Ajouter une photo".
+ *
+ * MINIMUM DEMANDÉ :
+ *   - Suppression d’un work via DELETE /works/:id
+ *   - Refresh de la modale + galerie principale
+ *
+ * AMÉLIORATION (BONUS, PAS OBLIGATOIRE MAIS +PROPRE) :
+ *   - Gestion des erreurs API (401, 403, 404, etc.)
+ *   - Message console + alert utilisateur
+ */
+
+async function deleteWork(workId) {
+    try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            alert("Vous devez être connecté pour supprimer une image.");
+            return false;
+        }
+
+        const res = await fetch(`http://localhost:5678/api/works/${workId}`, {
+            method: "DELETE",
+            headers: { "Authorization": `Bearer ${token}` }
+        });
+
+        //MINIMUM : succès API (200/204)
+        if (res.ok) {
+            // met à jour la source locale globale
+            if (Array.isArray(window.allWorks)) {
+            window.allWorks = window.allWorks.filter(w => String(w.id) !== String(workId));
+        }
+        return true;
+    }
+
+        //BONUS : gestion simple d'erreurs
+        switch (res.status) {
+            case 401: alert("Erreur 401 : non authentifié. Connectez-vous."); break;
+            case 403: alert("Erreur 403 : droits insuffisants."); break;
+            case 404: alert("Erreur 404 : élément introuvable."); break;
+            default:  alert(`Erreur ${res.status} lors de la suppression.`);
+        }
+        return false;
+
+    } catch (err) {
+        console.error("[modal] Erreur réseau :", err);
+        alert("Impossible de joindre le serveur.");
+        return false;
+    }
+    
 }
 
 
