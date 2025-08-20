@@ -88,10 +88,47 @@
 		</div>
 		
 		<!-- Vue 2 : Ajout photo (cachée par défaut)-->
-		 <div class="modal-view hidden" id="modal-view-add">
-			<h3 class="modal-title">Ajout photo</h3>
-			<!-- Formulaire d'ajout ici -->
-		 </div>
+		<div class="hidden" id="modal-view-add">
+			<!--Flèche retour en haut-->
+			<button id="back-to-gallery-top" class="back-btn" aria-label="Retour à la galerie">
+				<img src="./assets/icons/arrow-left.svg" alt="" aria-hidden="true">
+			</button>
+
+				<h3 class="modal-title">Ajout photo</h3>
+			
+				<!-- Formulaire d'ajout ici -->
+				<form id="add-photo-form" class="add-form">
+					<div class="dropzone" id="add-dropzone">
+						<!--aperçu quand un fichier est choisi-->
+						<img id="add-preview" class="preview hidden" alt="Aperçu" />
+
+						<!--état par défaut tant qu'aucun fichier-->
+						<div class="placeholder" id="add-placeholder">
+							<img src="./assets/icons/image-placeholder.svg" alt="" aria-hidden="true">
+							<label for="add-image" class="btn-secondary">+ Ajouter photo</label>
+							<input id="add-image" type="file" accept="image/*" hidden>
+							<p>jpg, png • 4 Mo max</p>
+						</div>
+					</div>
+
+					<label for="add-title">Titre</label>
+					<input id="add-title" type="text" required>
+
+					<label for="add-category">Catégorie</label>
+					<div class="select-wrapper">
+						<select id="add-category" required>
+						<!--Les catégories seront ajoutées dynamiquement via JS-->
+						</select>
+					</div>
+
+					<hr class="modal-separator">
+
+					<div class="actions">
+						<!--Actions : uniquement le bouton valider-->
+						<button type="submit" id="add-submit" class="btn-primary" disabled>Valider</button>
+					</div>
+				</form>
+	 	</div>
 	</div>
 </aside>
 

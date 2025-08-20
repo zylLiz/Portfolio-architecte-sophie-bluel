@@ -393,7 +393,7 @@ header nav li:last-child {
 	text-align: center;
 	/*mettre le bouton en bas*/
 	display: flex;
-	/*flex-direction: column;*/
+	flex-direction: column;
 	/*justify-content: flex-start; /*contenu en bas*/
 	align-items: center;
 }	
@@ -513,6 +513,121 @@ header nav li:last-child {
 .btn-primary:hover {
 	background-color: #144e44; /*un peu plus foncé*/
 }
+
+/* ===========================================================
+   VUE 2 — AJOUT PHOTO (structure, dropzone, formulaire)
+   =========================================================== */
+
+/* Bouton “retour” (flèche) en haut à gauche de la modale */
+.back-btn {
+	position: absolute;
+	top: 18px;
+	left: 24px;
+	width: 32px;
+	height: 32px;
+	display: grid;
+	place-items: center;
+	border: none;
+	background: transparent;
+	cursor: pointer;
+	
+}
+
+.back-btn img { width: 18px; height: 18px; }
+
+/* Conteneur du Formulaire d'Ajout */
+.add-form {
+	width: 100%;
+	max-width: 420px; /*maquette*/
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	margin-top: 8px;
+	align-items: stretch;
+}
+
+/* Zone d'Upload (fond bleu pâle)*/
+.dropzone {
+	height: 169px; /*maquette*/
+	background: #E8F1F6;
+	border-radius: 3px;
+	display: grid;
+	place-items: center;
+	overflow: hidden;
+	position: relative;
+	
+}
+
+/*Etat "aucun fichier" 'icône, bouton + texte)*/
+.placeholder {
+	display: grid;
+	place-items: center;
+	gap: 8px;
+	text-align: center;
+	color: #6B6B6B;
+	font-size: 12px;
+	line-height: 1.2;
+}
+
+.placeholder img {width: 76px; height: 76px; object-fit: contain; }
+
+/*Style du bouton gris "+Ajouter photo" (maquette) */
+.btn-secondary {
+	display: inline-block;
+	padding: 10px 22px;
+	border-radius: 50px;
+	border: none;
+	cursor: pointer;
+	background: #CBD6DC;  /*gris bleu*/
+	color: #306685; /*bleu texte*/
+	font-weight: 700;
+	font-family: 'Work Sans', sans-serif;
+	font-size: 14px;
+}
+
+/*Inputs / Select du Formulaire (alignés à 420px)*/
+.add-form label {
+	font-family: 'Work Sans', sans-serif;
+	font-size: 14px;
+	color: #3D3D3D;
+}
+
+.add-form input[type="text"],
+.add form select {
+	height: 51px;
+	border: none;
+	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.09);
+	padding: 0 12px;
+	font-size: 14px;
+	background: #fff;
+}
+
+/*MODIFIER (specifique à la vue Ajout Photo) :
+le <hr> ne doit PAS "pousser" le bouton en bas ici */
+
+#modal-view-add .modal-separator {
+	width: 420px;
+	height: 1px;
+	background: #B3B3B3;
+	border: none;
+	margin: 16px 0; /*modifier: marge simple*/
+}
+
+/*Barre d'actions ("Valider")*/
+.actions {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 12px;
+}
+
+/*Etat désactivé du bouton "Valider"*/
+#add-submit {
+	background: #A7A7A7;
+	/*cursor: not-allowed;*/
+	opacity: 0.9;
+}
+
 
 
 /***======= Utilitaires globaux_UNE SEULE FOIS & TJRS EN BAS DE PAGE CSS =====***/
