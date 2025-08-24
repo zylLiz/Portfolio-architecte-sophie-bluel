@@ -548,11 +548,13 @@ header nav li:last-child {
 
 /* Zone d'Upload (fond bleu pâle)*/
 .dropzone {
+	width: 100%;
 	height: 169px; /*maquette*/
 	background: #E8F1F6;
 	border-radius: 3px;
-	display: grid;
-	place-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	overflow: hidden;
 	position: relative;
 	
@@ -570,6 +572,18 @@ header nav li:last-child {
 }
 
 .placeholder img {width: 76px; height: 76px; object-fit: contain; }
+
+/*Ajout: quand un fichier est choisi, on affiche un aperçu plein cadre*/
+.preview {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.preview.hidden { /*Ajout*/
+	display: none !important; /*force le masquage*/
+}
 
 /*Style du bouton gris "+Ajouter photo" (maquette) */
 .btn-secondary {
@@ -590,16 +604,90 @@ header nav li:last-child {
 	font-family: 'Work Sans', sans-serif;
 	font-size: 14px;
 	color: #3D3D3D;
+	text-align: left;
+	display: block; /*s'assure que la label predn tt la largeur */
+	margin-left: 0; /*pas de décalage*/
 }
 
 .add-form input[type="text"],
-.add form select {
+.add-form select {
 	height: 51px;
 	border: none;
 	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.09);
 	padding: 0 12px;
 	font-size: 14px;
 	background: #fff;
+	border-radius: 3px; /*maquette*/
+}
+
+/*Aperçu image : respecte les proportions vignette*/
+#add-preview {
+	width: 129px; /*maquette*/
+	height: 193px; /*maquette*/
+	object-fit: cover;
+	border-radius: 3px;
+	display: block;
+	margin: 0 auto; /*centre l'image dans la zone bleue*/
+}
+
+/* MASQUER le style par défaut (wrapper pour "skinner" le select comme l'input*/
+.select-wrapper {
+	width: 100%;
+	max-width: 420px;
+	height: 51px;
+	border: none;
+	border-radius: 3px;
+	background: #fff;
+	box-shadow: 0 4px 14px rgba(0,0,0,0.09);
+	display: flex;
+	position: relative;
+	align-items: center;
+	padding: 0; /*évite le décalage interne*/
+}
+
+/*le select occupe tt l'espace*/
+.select-wrapper select {
+	appearance: none;
+	border: none;
+	background: transparent;
+	width: 100%;
+	height: 100%;
+	padding: 0 12px; /*identique à l'input texte*/
+	/*font: inherit;*/
+	/*color: #3D3D3D;*/
+	/*outline: none;*/
+	font-size: 14px;
+	font-family: 'Work Sans', sans-serif;
+	cursor: pointer;
+}
+
+/* Flèche (chevron) personnalisée */
+.select-wrapper .select-arrow {
+  position: absolute;
+  right: 12px;                   /* colle la flèche à droite */
+  top: 50%;
+  transform: translateY(-50%);   /* centre verticalement */
+  width: 12px;
+  height: 12px;
+  pointer-events: none;          /* clic passe à travers, pas sur l’icône */
+  opacity: 0.7;                  /* un peu atténué (maquette) */
+}
+
+.select-wrapper::after {  /*flèche custom*/
+	content: "";
+	position: absolute;
+	right: 12px;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 11px;
+	height: 11px;
+	background: url("./icons/chevron-down-solid\ 1.svg") no-repeat center/contain;
+	pointer-events: none; /*pour ne pas bloquer le clic*/
+}
+
+.select-wrapper:has(select:focus) { /*Ajout: focus visuel */
+	border-color: #1D6154;
+	box-shadow: 0 0 0 2px rgba(29,97,84,0,0.15);
 }
 
 /*MODIFIER (specifique à la vue Ajout Photo) :
@@ -622,10 +710,20 @@ le <hr> ne doit PAS "pousser" le bouton en bas ici */
 }
 
 /*Etat désactivé du bouton "Valider"*/
-#add-submit {
+#add-submit[disabled] {
 	background: #A7A7A7;
 	/*cursor: not-allowed;*/
 	opacity: 0.9;
+}
+
+/*ajout: Etat actif (quand le formulaire set valide)*/
+#add-submit:not([disabled]) {
+	background: #1D6154;
+	color: #fff;
+}
+
+#add-submit:not([disabled]):hover {
+	background: #144e44;
 }
 
 

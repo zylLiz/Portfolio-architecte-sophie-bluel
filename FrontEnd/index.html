@@ -90,7 +90,7 @@
 		<!-- Vue 2 : Ajout photo (cachée par défaut)-->
 		<div class="hidden" id="modal-view-add">
 			<!--Flèche retour en haut-->
-			<button id="back-to-gallery-top" class="back-btn" aria-label="Retour à la galerie">
+			<button id="back-to-gallery" class="back-btn" aria-label="Retour à la galerie">
 				<img src="./assets/icons/arrow-left.svg" alt="" aria-hidden="true">
 			</button>
 
@@ -99,10 +99,10 @@
 				<!-- Formulaire d'ajout ici -->
 				<form id="add-photo-form" class="add-form">
 					<div class="dropzone" id="add-dropzone">
-						<!--aperçu quand un fichier est choisi-->
+						<!--aperçu caché par défaut-->
 						<img id="add-preview" class="preview hidden" alt="Aperçu" />
 
-						<!--état par défaut tant qu'aucun fichier-->
+						<!--Placeholder (par défaut visible)-->
 						<div class="placeholder" id="add-placeholder">
 							<img src="./assets/icons/image-placeholder.svg" alt="" aria-hidden="true">
 							<label for="add-image" class="btn-secondary">+ Ajouter photo</label>
@@ -119,6 +119,8 @@
 						<select id="add-category" required>
 						<!--Les catégories seront ajoutées dynamiquement via JS-->
 						</select>
+						<!--AJOUT: icône chevron tjrs visible-->
+						<img src="./assets/icons/chevron-down-solid 1.svg" class="select-arrow" alt="" aria-hidden="true">
 					</div>
 
 					<hr class="modal-separator">

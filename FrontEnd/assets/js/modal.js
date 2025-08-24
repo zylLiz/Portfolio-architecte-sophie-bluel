@@ -13,6 +13,17 @@ const viewAdd = document.getElementById("modal-view-add");
 const btnAddPhoto = document.getElementById("btn-primary"); // bouton "Ajouter une photo"
 const modalGallery = document.getElementById("modal-gallery");
 
+/* Ajout : éléments de la vue Ajout*/
+const addForm = document.getElementById("add-photo-form");
+const addImageInput = document.getElementById("add-image");
+const addPreview = document.getElementById("add-preview");
+const addPlaceholder = document.getElementById("add-placeholder");
+const addTitle = document.getElementById("add-title");
+const addCategory = document.getElementById("add-category");
+const addSubmit = document.getElementById("add-submit");
+const backBtn = document.getElementById("back-to-gallery");
+
+
 // Garde-fous
 if (!modal) console.warn("[modal] #modal introuvable");
 if (!closeModalBtn) console.warn("[modal] #modal-close introuvable");
@@ -205,8 +216,155 @@ async function deleteWork(workId) {
     
 }
 
+/* ===================================================
+   4.2 Vue Ajout Photo — logique JS
+   =================================================== */
+/* AJOUT: Reset complet du formulaire d'ajout photo*/
+function resetAddForm() {
+  if (!addForm) return;
+  addForm.reset(); //vide champs "titre + select"
 
-// ÉTAPE 5 : Événements d’ouverture/fermeture
+  //reset image preview
+  if (addPreview) {
+    addPreview.src = "";
+    addPreview.classList.add("hidden");
+  }
+
+  //Réaffiche le placeholder
+  if (addPlaceholder) {
+    addPlaceholder.classList.remove("hidden");
+  }
+
+  //bouton "Valider/désactiver"
+  if (addSubmit) {
+    addSubmit.disabled = true;
+  }
+}
+
+   /* AJOUT : Charger les catégories depuis l’API */
+async function  loadCategories() {
+  if (!addCategory) return; //garde-fou
+
+  try {
+    const res = await fetch("http://localhost:5678/api/categories");
+    if (!res.ok) throw new Error(`GET /categories ${res.status}`);
+
+    const categories = await res.json();
+
+    //Reset + placeholder :  on vide d’abord le select pour éviter les doublons
+    addCategory.innerHTML = "";
+
+    //Ajout d'une option par défaut
+    const defaultOp = document.createElement("option");
+    defaultOp.value = "";
+    defaultOp.disabled = true;
+    defaultOp.selected = true;
+    defaultOp.textContent = "- Choisir -";
+    addCategory.appendChild(defaultOp);
+
+    //Injecter les options (ajout des vraies catégories)
+    categories.forEach(cat => {
+      const opt = document.createElement("option");
+      opt.value = cat.id;
+      opt.textContent = cat.name;
+      addCategory.appendChild(opt);
+    });
+
+  } catch (err) {
+    console.error("[modal] Erreur chargement catégories :", err);   
+  }
+  
+}   
+
+/* Aperçu image quand un fichier est choisi */
+addImageInput?.addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  //Vérif rapide du poids (4 Mo max)
+  if (file.size > 4 * 1024 * 1024) {
+    alert("Image trop lourde (max 4 Mo).");
+    addImageInput.value = "";
+    checkFormValidity();
+    return;
+  }
+
+  //Générer l'aperçu
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    addPreview.src = ev.target.result;
+    addPreview.classList.remove("hidden");
+    addPlaceholder.classList.add("hidden"); //masque le bloc+Ajouter
+    checkFormValidity(); //vérifie si on active "valider"
+  };
+  reader.readAsDataURL(file);
+});
+
+/* Validation dynamique (active/désactive le bouton "valider")*/
+function checkFormValidity() {
+  if (!addSubmit) return;
+  const hasImage = !! (addImageInput && addImageInput.files && addImageInput.files.length > 0);
+
+  const valid =
+  hasImage &&
+  (addTitle?.value.trim() !== "") &&
+  (addCategory?.value && addCategory.value !== "");
+
+  addSubmit.disabled = !valid; //si pas valide → désactivé
+}
+
+/* Branche les champs texte/select sur la validation*/
+[addTitle, addCategory].forEach(el =>
+  el?.addEventListener("input", checkFormValidity)
+);
+
+/*Bouton retour vers Galerie*/
+backBtn?.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  //remet le formulaire à zéro en même temps
+  addForm?.reset();
+
+  //réinitialise le Dropzone
+  if (addPreview) {
+    addPreview.removeAttribute("src");  //enlève image
+    addPreview.classList.add("hidden"); //applique la class hidden
+    addPreview.style.display = "none"; //force l'invisibilité
+  }
+  if (addPlaceholder) {
+    addPlaceholder.classList.remove("hidden");
+    addPlaceholder.style.display = "grid"; //force l'affichage
+  }
+  if (addSubmit) addSubmit.disabled = true;
+
+  //revient à la vue "Galerie"
+  showView(viewGallery);
+});
+
+/* Initialiser la vue Ajout quand on y bascule*/
+function initAddView() {
+  if (!addForm) return;
+  addForm.reset();
+
+  // réinitialise la dropzone (Reset preview + placeholder)
+  if (addPreview) {
+    addPreview.removeAttribute("src");
+    addPreview.classList.add("hidden");
+    addPreview.style.display = "none";
+  }
+  if (addPlaceholder) {
+    addPlaceholder.classList.remove("hidden");
+    addPlaceholder.style.display = "grid";
+  }
+
+  if (addSubmit) addSubmit.disabled = true;
+
+  loadCategories();  // récupère les catégories depuis l'API
+}
+
+/* ===================================================
+   ÉTAPE 5 : Événements d’ouverture/fermeture
+   =================================================== */
 openModalBtn?.addEventListener("click", (e) => {
   e.preventDefault();
   openModal();
@@ -217,10 +375,11 @@ closeModalBtn?.addEventListener("click", (e) => {
   closeModal();
 });
 
-/* AJOUT : bouton "Ajouter une photo" → bascule vers vue Ajout */
+/* AJOUT : bouton "Ajouter une photo" → bascule vers vue Ajout + init */
 btnAddPhoto?.addEventListener("click", (e) => {
     e.preventDefault();
     showView(viewAdd);
+    loadCategories(); /* ajout init*/
 });
 
 // Ferme si clic sur le fond assombri (en-dehors du panneau)
