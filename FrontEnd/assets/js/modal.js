@@ -318,49 +318,97 @@ function checkFormValidity() {
   el?.addEventListener("input", checkFormValidity)
 );
 
-/*Bouton retour vers Galerie*/
+/* Bouton retour vers Galerie */
 backBtn?.addEventListener("click", (e) => {
   e.preventDefault();
 
-  //remet le formulaire à zéro en même temps
-  addForm?.reset();
+  // reset complet (champs texte, select, fichier, preview)
+  resetAddForm();
+  if (addImageInput) addImageInput.value = ""; // FIX : reset du file input
 
-  //réinitialise le Dropzone
-  if (addPreview) {
-    addPreview.removeAttribute("src");  //enlève image
-    addPreview.classList.add("hidden"); //applique la class hidden
-    addPreview.style.display = "none"; //force l'invisibilité
-  }
-  if (addPlaceholder) {
-    addPlaceholder.classList.remove("hidden");
-    addPlaceholder.style.display = "grid"; //force l'affichage
-  }
-  if (addSubmit) addSubmit.disabled = true;
-
-  //revient à la vue "Galerie"
+  // revient à la vue Galerie
   showView(viewGallery);
 });
 
 /* Initialiser la vue Ajout quand on y bascule*/
 function initAddView() {
-  if (!addForm) return;
-  addForm.reset();
-
-  // réinitialise la dropzone (Reset preview + placeholder)
-  if (addPreview) {
-    addPreview.removeAttribute("src");
-    addPreview.classList.add("hidden");
-    addPreview.style.display = "none";
-  }
-  if (addPlaceholder) {
-    addPlaceholder.classList.remove("hidden");
-    addPlaceholder.style.display = "grid";
-  }
-
-  if (addSubmit) addSubmit.disabled = true;
-
-  loadCategories();  // récupère les catégories depuis l'API
+  resetAddForm();    // FIX : utilise la fonction utilitaire
+  loadCategories();  // recharge les catégories
 }
+
+
+/* ===================================================
+   4.3 Soumission du formulaire d'ajout photo (POST API)
+   =================================================== */
+
+/* AJOUT : écoute l’événement "submit" du formulaire */
+addForm?.addEventListener("submit", async (e) => {
+  e.preventDefault(); //évite le chargement de page
+
+  //---Vérification de base---
+  if(!addImageInput.files[0] || !addTitle.value.trim() || !addCategory.value) {
+    alert("Merci de remplir tous les champs et d'ajouter une image.");
+    return;
+  }
+
+  // ---Péparation de la requête (données au format FormData (multipart/form-data) ---
+  //On utilise FormData pour envoyer un fichier + texte
+  const formData = new FormData();
+  formData.append("image", addImageInput.files[0]); //image binaire
+  formData.append("title", addTitle.value.trim());  //titre
+  formData.append("category", addCategory.value);  //catégorie (id numérique)
+
+  try {
+    // ---Récupération du "Token" pour l'authentification ---
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Non autorisé, vous devez être connecté.");
+      return;
+    }
+
+    // ---Envoi de la requête POST à l'API ---
+    const res = await fetch("http://localhost:5678/api/works", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${token}` //authentification indispensable
+      // Ne PAS mettre de "Content-type" → laissé à FormData  
+      },
+      body: formData
+    });
+
+    // ---Gestion des erreurs ---
+    if (!res.ok) {
+      if (res.status === 400) alert("Formulaire incomplet ou invalide.");
+      else if (res.status === 401) alert("Non autorisé : reconnectez-vous.");
+      else alert(`Erreur ${res.status} lors de l'ajout.`);
+      return;
+    }
+
+    // --- Succès : on récupère le nouvel objet Work renvoyé par l'API ---
+    const newWork = await res.json();
+    console.log("✅ Ajouté avec succès :", newWork);
+
+    //Mettre à jour la source locale ---
+    if (Array.isArray(window.allWorks)) {
+      window.allWorks.push(newWork);
+    }
+
+    // --- Rafraîchir la galerie principale + galerie modale ---
+    if (typeof displayWorks === "function") {
+      displayWorks(window.allWorks);
+    }
+    renderModalGallery();
+
+    // --- Remettre le formulaire à  zéro + revenir à la vue Galerie ---
+    resetAddForm();
+    showView(viewGallery);
+  
+  } catch (err) {
+    console.error("❌ Erreur réseau lors de l'ajout :", err);
+    alert("Impossible d'ajouter le projet. Vérifiez votre connexion.");
+  }
+});
+
 
 /* ===================================================
    ÉTAPE 5 : Événements d’ouverture/fermeture
