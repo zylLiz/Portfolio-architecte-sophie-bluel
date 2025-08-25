@@ -341,19 +341,31 @@ function initAddView() {
    4.3 Soumission du formulaire d'ajout photo (POST API)
    =================================================== */
 
+// Nouveau : sélection du message d'erreur
+const addError = document.getElementById("add-error");
+const addSuccess = document.getElementById("add-success");  
+
 /* AJOUT : écoute l’événement "submit" du formulaire */
 addForm?.addEventListener("submit", async (e) => {
   e.preventDefault(); //évite le chargement de page
 
+  //Masquer message au début
+  if (addError) addError.classList.add("hidden");
+  if (addSuccess) addSuccess.classList.add("hidden");
+  
+
   //---Vérification de base---
   if(!addImageInput.files[0] || !addTitle.value.trim() || !addCategory.value) {
-    alert("Merci de remplir tous les champs et d'ajouter une image.");
-    return;
+    if (addError) {
+      addError.textContent = "⚠️ Merci de remplir tous les champs et d'ajouter une image.";
+      addError.classList.remove("hidden");
+    }
+    return; // on bloque ici si formulaire incomplet
   }
 
   // ---Péparation de la requête (données au format FormData (multipart/form-data) ---
   //On utilise FormData pour envoyer un fichier + texte
-  const formData = new FormData();
+const formData = new FormData();
   formData.append("image", addImageInput.files[0]); //image binaire
   formData.append("title", addTitle.value.trim());  //titre
   formData.append("category", addCategory.value);  //catégorie (id numérique)
@@ -362,7 +374,7 @@ addForm?.addEventListener("submit", async (e) => {
     // ---Récupération du "Token" pour l'authentification ---
     const token = localStorage.getItem("token");
     if (!token) {
-      alert("Non autorisé, vous devez être connecté.");
+     alert("Non autorisé, vous devez être connecté.");
       return;
     }
 
@@ -377,10 +389,15 @@ addForm?.addEventListener("submit", async (e) => {
     });
 
     // ---Gestion des erreurs ---
-    if (!res.ok) {
-      if (res.status === 400) alert("Formulaire incomplet ou invalide.");
-      else if (res.status === 401) alert("Non autorisé : reconnectez-vous.");
-      else alert(`Erreur ${res.status} lors de l'ajout.`);
+     if (!res.ok) {
+      if (res.status === 400 && addError) {
+        addError.textContent = "⚠️ Formulaire incomplet ou invalide.";
+        addError.classList.remove("hidden");
+      } else if (res.status === 401) {
+        alert("Non autorisé : reconnectez-vous.");
+      } else {
+        alert(`Erreur ${res.status} lors de l'ajout.`);
+      }
       return;
     }
 
@@ -388,7 +405,7 @@ addForm?.addEventListener("submit", async (e) => {
     const newWork = await res.json();
     console.log("✅ Ajouté avec succès :", newWork);
 
-    //Mettre à jour la source locale ---
+    //--Mettre à jour la source locale ---
     if (Array.isArray(window.allWorks)) {
       window.allWorks.push(newWork);
     }
@@ -399,14 +416,28 @@ addForm?.addEventListener("submit", async (e) => {
     }
     renderModalGallery();
 
-    // --- Remettre le formulaire à  zéro + revenir à la vue Galerie ---
+    // AJOUT : message succès (vert)
+     if (addSuccess) {
+      addSuccess.textContent = "✅ Projet ajouté avec succès !";
+      addSuccess.classList.remove("hidden");
+    }
+     
+     // Reset du formulaire après succès
     resetAddForm();
-    showView(viewGallery);
-  
+
+    // Option UX : cacher message après 2 secondes et revenir galerie
+    setTimeout(() => {
+      if (addSuccess) addSuccess.classList.add("hidden");
+      showView(viewGallery);
+    }, 2000);
+
   } catch (err) {
-    console.error("❌ Erreur réseau lors de l'ajout :", err);
-    alert("Impossible d'ajouter le projet. Vérifiez votre connexion.");
-  }
+    console.error("Erreur réseau lors de l'ajout :", err);
+    if (addError) {
+      addError.textContent = "⚠️ Impossible d'ajouter le projet (connexion ?)";
+      addError.classList.remove("hidden");
+    }
+  }  
 });
 
 

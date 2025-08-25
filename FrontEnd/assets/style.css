@@ -726,7 +726,27 @@ le <hr> ne doit PAS "pousser" le bouton en bas ici */
 	background: #144e44;
 }
 
+/* ===========================================================
+   FORMULAIRE AJOUT PHOTO — MESSAGES ERREUR / SUCCÈS
+   =========================================================== */
 
+/* Message d'erreur / succès du formulaire */
+#add-error,
+#add-success {
+	font-size: 14px;
+	text-align: center;
+	margin-top: 12px;
+	font-weight: 500;;
+}
+
+/* états */
+#add-error {
+  color: red;
+}
+
+#add-success {
+  color: green;
+}
 
 /***======= Utilitaires globaux_UNE SEULE FOIS & TJRS EN BAS DE PAGE CSS =====***/
 

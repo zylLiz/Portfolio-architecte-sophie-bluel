@@ -98,6 +98,7 @@
 			
 				<!-- Formulaire d'ajout ici -->
 				<form id="add-photo-form" class="add-form">
+					<!--...dropzone, titre, catégorie ...-->
 					<div class="dropzone" id="add-dropzone">
 						<!--aperçu caché par défaut-->
 						<img id="add-preview" class="preview hidden" alt="Aperçu" />
@@ -129,6 +130,10 @@
 						<!--Actions : uniquement le bouton valider-->
 						<button type="submit" id="add-submit" class="btn-primary" disabled>Valider</button>
 					</div>
+
+					<!-- 🔴🟢 Message d'erreur/succès affiché dynamiquement via JS -->
+					 <p id="add-error" class="hidden"></p>
+					 <p id="add-success" class="hidden"></p>
 				</form>
 	 	</div>
 	</div>
