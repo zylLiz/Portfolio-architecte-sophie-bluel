@@ -101,14 +101,20 @@ li:hover {
 #introduction {
 	display: flex;
 	align-items: center;
+	justify-content: flex-start;
+	gap: 50px;
+	width: 85%;
+	max-width: 1140px;
+	margin: 0 auto 50px auto;
 }
 #introduction figure {
 	flex: 1
 }
 #introduction img {
-	display: block;
+	/*display: block;*/
 	margin: auto;
-	width: 80%;
+	width: 474px;
+	height: auto;
 }
 
 #introduction article {
@@ -126,15 +132,20 @@ li:hover {
 	margin-bottom: 1em;
 }
 .gallery {
-	width: 100%;
+	width: 85%;
+	/*min-width: 1140px;*/
+	margin: 0 auto;
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
-	grid-column-gap: 20px;
-	grid-row-gap: 20px;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 20px;
+	justify-items: center;
 }
 
 .gallery img {
 	width: 100%;
+	height: auto;
+	object-fit: cover;
+	max-width: 305px;
 
 }
 #contact {
