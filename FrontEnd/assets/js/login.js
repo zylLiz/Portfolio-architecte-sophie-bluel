@@ -1,5 +1,3 @@
-console.log("Fichier JS bien chargé !");
-
 // Sélectionne le formulaire dasn la page
 const form = document.querySelector("form");
 
@@ -12,8 +10,6 @@ if (!form) {
 // Récupération des valeurs du formulaire
 const email = document.querySelector("#email").value;
 const password = document.querySelector("#password").value;
-
-console.log("Tentative de connexion avec :", email);
 
 try {
     const response = await fetch("http://localhost:5678/api/users/login", {
@@ -28,11 +24,9 @@ try {
     });
 
     const data = await response.json();
-    console.log("Réponse de l'API :", data);
 
     if (response.ok) {
         //Connexion réussie
-        console.log("Connexion réussie !", data);
         localStorage.setItem("token", data.token);
         window.location.href = "index.html"; 
     } else {

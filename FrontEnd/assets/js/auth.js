@@ -1,5 +1,3 @@
-
-
 //3-Fonction appelé après une connexion réussie
 function handleLoginSuccess() {
     //Affiche le bandeau noir

@@ -23,13 +23,6 @@ const addCategory = document.getElementById("add-category");
 const addSubmit = document.getElementById("add-submit");
 const backBtn = document.getElementById("back-to-gallery");
 
-
-// Garde-fous
-if (!modal) console.warn("[modal] #modal introuvable");
-if (!closeModalBtn) console.warn("[modal] #modal-close introuvable");
-if (!openModalBtn) console.warn("[modal] #edit-button introuvable (bouton d'ouverture)");
-if (!modalGallery) console.warn("[modal] #modal-gallery introuvable");
-
 // ÉTAPE 2 : Navigation entre les vues
 function showView(view) {
     [viewGallery, viewAdd].forEach(v => v?.classList.add("hidden")); // cache tout
@@ -391,7 +384,7 @@ const formData = new FormData();
     // ---Gestion des erreurs ---
      if (!res.ok) {
       if (res.status === 400 && addError) {
-        addError.textContent = "⚠️ Formulaire incomplet ou invalide.";
+        addError.textContent = " Formulaire incomplet ou invalide.";
         addError.classList.remove("hidden");
       } else if (res.status === 401) {
         alert("Non autorisé : reconnectez-vous.");
@@ -403,7 +396,7 @@ const formData = new FormData();
 
     // --- Succès : on récupère le nouvel objet Work renvoyé par l'API ---
     const newWork = await res.json();
-    console.log("✅ Ajouté avec succès :", newWork);
+    
 
     //--Mettre à jour la source locale ---
     if (Array.isArray(window.allWorks)) {
@@ -418,7 +411,7 @@ const formData = new FormData();
 
     // AJOUT : message succès (vert)
      if (addSuccess) {
-      addSuccess.textContent = "✅ Projet ajouté avec succès !";
+      addSuccess.textContent = "Projet ajouté avec succès !";
       addSuccess.classList.remove("hidden");
     }
      
@@ -434,7 +427,7 @@ const formData = new FormData();
   } catch (err) {
     console.error("Erreur réseau lors de l'ajout :", err);
     if (addError) {
-      addError.textContent = "⚠️ Impossible d'ajouter le projet (connexion ?)";
+      addError.textContent = "Impossible d'ajouter le projet (connexion ?)";
       addError.classList.remove("hidden");
     }
   }  
